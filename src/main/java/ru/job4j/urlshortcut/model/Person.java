@@ -93,6 +93,14 @@ public class Person {
         this.role = role;
     }
 
+    public Site getSite() {
+        return site;
+    }
+
+    public void setSite(Site site) {
+        this.site = site;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -109,5 +117,6 @@ public class Person {
     public int hashCode() {
         return Objects.hash(this.getId());
     }
+
 }
 
