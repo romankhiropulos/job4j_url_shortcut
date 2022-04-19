@@ -5,9 +5,10 @@ import org.springframework.stereotype.Service;
 import ru.job4j.urlshortcut.model.Person;
 import ru.job4j.urlshortcut.model.Site;
 import ru.job4j.urlshortcut.repository.PersonRepository;
+import ru.job4j.urlshortcut.util.Encryptor;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.zip.CRC32;
 
 @Service
 public class PersonService {
@@ -42,7 +43,7 @@ public class PersonService {
 
     /**
      * Generate name, password for new Person
-     *
+     * <p>
      * TODO
      *
      * @param site
@@ -53,12 +54,22 @@ public class PersonService {
         Optional<Site> siteFromDB = siteService.findByName(site.getName());
         person.setSite(siteFromDB.orElse(site));
         roleService.findByRole("ROLE_USER").ifPresent(person::setRole);
-        String newGeneratedName = "passwordNameTODO";
-        String newGeneratedPasswordNotEncode = "passwordTODO";
+        String name = site.getName() + "_user";
+        String newGeneratedPasswordNotEncode = "(next person id + next or exists site id) to base62";
         person.setPassword(encoder.encode(person.getPassword()));
         Person savedPerson = personRepository.save(person);
         savedPerson.setPassword(newGeneratedPasswordNotEncode);
         return savedPerson;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Encryptor.toBase62(11157L));
+        System.out.println(Encryptor.toBase62(111157L));
+        System.out.println(Encryptor.toBase62(1111157L));
+        System.out.println(Encryptor.toBase62(11111157L));
+        System.out.println(Encryptor.toBase62(111111157L));
+        System.out.println(Encryptor.toBase62(1111111157L));
+        System.out.println(Encryptor.toBase62(11111111157L));
     }
 
     public Optional<Person> findByName(String name) {

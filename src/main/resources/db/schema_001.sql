@@ -12,10 +12,11 @@ CREATE TABLE role
 CREATE TABLE person
 (
     id       BIGSERIAL PRIMARY KEY,
-    name     VARCHAR(50) NOT NULL UNIQUE,
+    name     VARCHAR(50) NOT NULL,
     password VARCHAR(50) NOT NULL,
     role_id  BIGINT      NOT NULL REFERENCES role (id),
-    site_id  BIGINT      NOT NULL REFERENCES site (id)
+    site_id  BIGINT      NOT NULL REFERENCES site (id),
+    CONSTRAINT name_password_unique UNIQUE (name, password)
 );
 
 CREATE TABLE url
