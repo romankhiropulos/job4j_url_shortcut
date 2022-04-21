@@ -51,25 +51,17 @@ public class PersonService {
      */
     public Person save(Site site) {
         Person person = new Person();
-        Optional<Site> siteFromDB = siteService.findByName(site.getName());
-        person.setSite(siteFromDB.orElse(site));
+        Long newId = personRepository.getNextIdSequence();
+        person.setId(newId);
+        site = siteService.save(site);
+        person.setSite(site);
         roleService.findByRole("ROLE_USER").ifPresent(person::setRole);
-        String name = site.getName() + "_user";
-        String newGeneratedPasswordNotEncode = "(next person id + next or exists site id) to base62";
-        person.setPassword(encoder.encode(person.getPassword()));
-        Person savedPerson = personRepository.save(person);
-        savedPerson.setPassword(newGeneratedPasswordNotEncode);
-        return savedPerson;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(Encryptor.toBase62(11157L));
-        System.out.println(Encryptor.toBase62(111157L));
-        System.out.println(Encryptor.toBase62(1111157L));
-        System.out.println(Encryptor.toBase62(11111157L));
-        System.out.println(Encryptor.toBase62(111111157L));
-        System.out.println(Encryptor.toBase62(1111111157L));
-        System.out.println(Encryptor.toBase62(11111111157L));
+        person.setName(site.getName() + "_user");
+        String newPasswordBase62 = Encryptor.toBase62((person.getId() + person.getSite().getId()));
+        person.setPassword(encoder.encode(newPasswordBase62));
+        personRepository.save(person);
+        person.setPassword(newPasswordBase62);
+        return person;
     }
 
     public Optional<Person> findByName(String name) {

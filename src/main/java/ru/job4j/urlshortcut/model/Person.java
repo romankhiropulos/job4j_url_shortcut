@@ -14,7 +14,7 @@ import java.util.Objects;
 public class Person {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull(message = "Id must be non null", groups = {
             Operation.OnUpdate.class, Operation.OnDelete.class
     })
