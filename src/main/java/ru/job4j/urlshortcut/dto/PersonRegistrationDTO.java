@@ -6,12 +6,20 @@ public class PersonRegistrationDTO {
 
     private String password;
 
+    private boolean registration;
+
     public PersonRegistrationDTO() {
     }
 
     public PersonRegistrationDTO(String name, String password) {
         this.name = name;
         this.password = password;
+    }
+
+    public PersonRegistrationDTO(String name, String password, boolean registration) {
+        this.name = name;
+        this.password = password;
+        this.registration = registration;
     }
 
     public String getName() {
@@ -28,5 +36,13 @@ public class PersonRegistrationDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isRegistration() {
+        return registration;
+    }
+
+    public void setRegistration(boolean registration) {
+        this.registration = registration;
     }
 }

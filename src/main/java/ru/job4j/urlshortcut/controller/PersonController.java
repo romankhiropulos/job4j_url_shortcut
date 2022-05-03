@@ -14,6 +14,7 @@ import ru.job4j.urlshortcut.exception.Operation;
 import ru.job4j.urlshortcut.model.Person;
 import ru.job4j.urlshortcut.model.Site;
 import ru.job4j.urlshortcut.service.PersonService;
+import ru.job4j.urlshortcut.service.SiteService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +25,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -35,24 +37,32 @@ public class PersonController {
 
     private final PersonService personService;
 
+    private final SiteService siteService;
+
     private final BCryptPasswordEncoder encoder;
 
     private final ObjectMapper objectMapper;
 
     public PersonController(final PersonService personService,
+                            final SiteService siteService,
                             final BCryptPasswordEncoder encoder,
                             final ObjectMapper objectMapper) {
 
         this.personService = personService;
+        this.siteService = siteService;
         this.encoder = encoder;
         this.objectMapper = objectMapper;
     }
 
     @PostMapping("/registration")
     public ResponseEntity<PersonRegistrationDTO> signUp(@RequestBody Site site) {
-       Person newPerson = personService.save(site);
-       PersonRegistrationDTO personRegistrationDTO = objectMapper.convertValue(newPerson, PersonRegistrationDTO.class);
-       return new ResponseEntity<>(personRegistrationDTO, HttpStatus.OK);
+        Optional<Site> siteFromDB = siteService.findByName(site.getName());
+        Person newPerson = personService.save(site);
+        PersonRegistrationDTO personRegistrationDTO = objectMapper.convertValue(newPerson, PersonRegistrationDTO.class);
+        if (siteFromDB.isPresent()) {
+            personRegistrationDTO.setRegistration(true);
+        }
+        return new ResponseEntity<>(personRegistrationDTO, HttpStatus.OK);
     }
 
     @GetMapping("/all")
@@ -93,7 +103,7 @@ public class PersonController {
     @PatchMapping("/")
     @Validated(Operation.OnUpdate.class)
     public ResponseEntity<Void> modify(@Valid @RequestBody Person source)
-                        throws InvocationTargetException, IllegalAccessException {
+            throws InvocationTargetException, IllegalAccessException {
         Person destination = match(source);
         validatePerson(destination);
         this.personService.save(destination);

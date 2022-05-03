@@ -8,7 +8,6 @@ import ru.job4j.urlshortcut.repository.PersonRepository;
 import ru.job4j.urlshortcut.util.Encryptor;
 
 import java.util.*;
-import java.util.zip.CRC32;
 
 @Service
 public class PersonService {
