@@ -38,5 +38,5 @@ CREATE TABLE url
     short_url   VARCHAR NOT NULL UNIQUE,
     long_url    VARCHAR NOT NULL UNIQUE,
     total_calls BIGINT DEFAULT 0,
-    site_id     BIGINT  NOT NULL REFERENCES person (id)
+    site_id     BIGINT  NOT NULL REFERENCES site (id)
 );

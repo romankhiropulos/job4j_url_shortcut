@@ -1,20 +1,10 @@
-CREATE OR REPLACE PROCEDURE increment_link_calls(id_url BIGINT) AS
+
+CREATE OR REPLACE PROCEDURE increment_link_calls_procedure(IN id_url_in BIGINT) AS
 $$
-DECLARE
---    titles   TEXT DEFAULT '';
---    rec_film RECORD;
---     cur_films CURSOR (p_year INTEGER)
---         FOR SELECT title, release_year
---             FROM film
---             WHERE release_year = p_year;
 BEGIN
 
-    SET TRANSACTION ISOLATION LEVEL SERIALIZABLE READ WRITE;
-
-    UPDATE url
-        SET total_calls = (SELECT total_calls FROM url WHERE id = id_url) + 1
-            WHERE id = id_url;
-
+    UPDATE url SET total_calls = total_calls + 1
+                        WHERE id = id_url_in;
 END;
 $$ LANGUAGE plpgsql;
 
