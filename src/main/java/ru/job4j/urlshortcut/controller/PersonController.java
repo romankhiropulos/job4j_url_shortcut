@@ -58,7 +58,9 @@ public class PersonController {
     public ResponseEntity<PersonRegistrationDTO> signUp(@RequestBody Site site) {
         Optional<Site> siteFromDB = siteService.findByName(site.getName());
         Person newPerson = personService.save(site);
-        PersonRegistrationDTO personRegistrationDTO = objectMapper.convertValue(newPerson, PersonRegistrationDTO.class);
+        PersonRegistrationDTO personRegistrationDTO = new PersonRegistrationDTO(
+                newPerson.getName(), newPerson.getPassword()
+        );
         if (siteFromDB.isPresent()) {
             personRegistrationDTO.setRegistration(true);
         }

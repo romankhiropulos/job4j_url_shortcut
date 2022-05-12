@@ -25,11 +25,10 @@ CREATE TABLE site
 CREATE TABLE person
 (
     id       BIGINT DEFAULT NEXTVAL('person_id_seq') PRIMARY KEY,
-    name     VARCHAR,
+    name     VARCHAR UNIQUE,
     password VARCHAR,
     role_id  BIGINT NOT NULL REFERENCES role (id),
-    site_id  BIGINT NOT NULL REFERENCES site (id),
-    CONSTRAINT name_password_unique UNIQUE (name, password)
+    site_id  BIGINT NOT NULL REFERENCES site (id)
 );
 
 CREATE TABLE url

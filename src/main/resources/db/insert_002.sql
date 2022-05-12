@@ -7,6 +7,6 @@ INSERT INTO role (role)
 INSERT INTO role (role)
     VALUES ('ROLE_ADMIN');
 
-INSERT INTO site (id, name) VALUES (50000, 'job4j.ru');
+INSERT INTO site (id, name) VALUES (49999, 'job4j.ru');
 
-INSERT INTO url (short_url, long_url, site_id) VALUES ('shortUrl', 'job4j.ru', 50000);
+INSERT INTO url (short_url, long_url, site_id) VALUES ('shortUrl', 'job4j.ru', 49999);
