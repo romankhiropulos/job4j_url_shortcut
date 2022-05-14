@@ -24,5 +24,10 @@ public interface UrlRepository extends CrudRepository<Url, Long> {
     @Query(value = "CALL increment_link_calls_procedure(:id_url_in, :answer_inout)", nativeQuery = true)
     String incrementLinkCallsNative(@Param("id_url_in") Long id, @Param("answer_inout") String answer);
 
+    @Query(value = "SELECT NEXTVAL('url_id_seq')", nativeQuery = true)
+    Long getNextIdSequence();
+
     Optional<Url> findByShortUrl(String shortUrl);
+
+    Optional<Url> findByLongUrl(String longUrl);
 }

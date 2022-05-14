@@ -56,14 +56,12 @@ public class PersonController {
 
     @PostMapping("/registration")
     public ResponseEntity<PersonRegistrationDTO> signUp(@RequestBody Site site) {
+        final PersonRegistrationDTO personRegistrationDTO = new PersonRegistrationDTO();
         Optional<Site> siteFromDB = siteService.findByName(site.getName());
+        siteFromDB.ifPresent(site1 ->  personRegistrationDTO.setRegistration(false));
         Person newPerson = personService.save(site);
-        PersonRegistrationDTO personRegistrationDTO = new PersonRegistrationDTO(
-                newPerson.getName(), newPerson.getPassword()
-        );
-        if (siteFromDB.isPresent()) {
-            personRegistrationDTO.setRegistration(true);
-        }
+        personRegistrationDTO.setName(newPerson.getName());
+        personRegistrationDTO.setPassword(newPerson.getPassword());
         return new ResponseEntity<>(personRegistrationDTO, HttpStatus.OK);
     }
 

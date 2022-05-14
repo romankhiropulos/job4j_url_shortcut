@@ -6,7 +6,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.job4j.urlshortcut.dto.UrlDTO;
+import ru.job4j.urlshortcut.dto.LongUrlDTO;
+import ru.job4j.urlshortcut.dto.ShortUrlDTO;
 import ru.job4j.urlshortcut.model.Url;
 import ru.job4j.urlshortcut.service.UrlService;
 
@@ -26,15 +27,9 @@ public class UrlController {
     }
 
     @PostMapping("/convert")
-    public ResponseEntity<UrlDTO> convert(@RequestBody UrlDTO urlDTO) {
-//        Optional<Url> siteFromDB = urlService.findByName(site.getName());
-//        Person newPerson = personService.save(site);
-//        PersonRegistrationDTO personRegistrationDTO = objectMapper.convertValue(newPerson, PersonRegistrationDTO.class);
-//        if (siteFromDB.isPresent()) {
-//            personRegistrationDTO.setRegistration(true);
-//        }
-
-        return new ResponseEntity<>(new UrlDTO(), HttpStatus.OK);
+    public ResponseEntity<ShortUrlDTO> convert(@RequestBody LongUrlDTO url) {
+        Optional<ShortUrlDTO> shortUrlDTO = this.urlService.convert(url);
+        return new ResponseEntity<>(shortUrlDTO.get(), HttpStatus.OK);
     }
 
     @GetMapping("/redirect/{shortCode}")
@@ -43,7 +38,7 @@ public class UrlController {
         return url.map(value -> {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Location", value.getLongUrl());
-            return new ResponseEntity<String>(headers, HttpStatus.FOUND);
+            return new ResponseEntity<String>(headers, HttpStatus.valueOf(302));
         }).orElse(new ResponseEntity<>(shortCode, HttpStatus.CONFLICT));
     }
 }

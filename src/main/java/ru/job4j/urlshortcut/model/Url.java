@@ -45,6 +45,25 @@ public class Url {
     public Url() {
     }
 
+    public Url(Long id) {
+        this.id = id;
+    }
+
+    public Url(Long id, String shortUrl, String longUrl, Site site) {
+        this.id = id;
+        this.shortUrl = shortUrl;
+        this.longUrl = longUrl;
+        this.site = site;
+    }
+
+    public Url(Long id, String shortUrl, String longUrl, Long totalCalls, Site site) {
+        this.id = id;
+        this.shortUrl = shortUrl;
+        this.longUrl = longUrl;
+        this.totalCalls = totalCalls;
+        this.site = site;
+    }
+
     public Long getId() {
         return id;
     }

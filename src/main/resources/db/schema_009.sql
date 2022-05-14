@@ -36,6 +36,6 @@ CREATE TABLE url
     id          BIGINT DEFAULT NEXTVAL('url_id_seq') PRIMARY KEY,
     short_url   VARCHAR NOT NULL UNIQUE,
     long_url    VARCHAR NOT NULL UNIQUE,
-    total_calls BIGINT DEFAULT 0,
+    total_calls BIGINT DEFAULT 1,
     site_id     BIGINT  NOT NULL REFERENCES site (id)
 );

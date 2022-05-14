@@ -37,7 +37,9 @@ public class SiteController {
 
         Optional<Person> user = personService.findByName(username);
         List<UrlStatisticDTO> statisticDTOList = new ArrayList<>();
-        user.ifPresent(person -> statisticDTOList.addAll(siteService.getStatisticBySiteId(person.getId())));
+        user.ifPresent(person -> statisticDTOList.addAll(
+                siteService.getStatisticBySiteId(person.getSite().getId())
+        ));
         return ResponseEntity.status(statisticDTOList.size() != 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND)
                 .body(statisticDTOList);
     }
