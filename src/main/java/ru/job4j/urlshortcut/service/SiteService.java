@@ -1,10 +1,7 @@
 package ru.job4j.urlshortcut.service;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 import ru.job4j.urlshortcut.dto.UrlStatisticDTO;
-import ru.job4j.urlshortcut.model.Person;
 import ru.job4j.urlshortcut.model.Site;
 import ru.job4j.urlshortcut.model.Url;
 import ru.job4j.urlshortcut.repository.SiteRepository;
