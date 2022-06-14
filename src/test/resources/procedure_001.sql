@@ -1,0 +1,17 @@
+-- There is no stored procedure and sql userdefined function in H2 database instead of that we use java methods
+-- and create a alias to refer that.We can call that methods using alias.
+-- https://stackoverflow.com/questions/11718865/stored-procedure-in-h2-database
+-- DROP ALIAS IF EXISTS increment_link_calls_procedure;
+-- CREATE ALIAS increment_link_calls_procedure AS
+-- $$
+-- String getTableContent(java.sql.Connection con) throws Exception {
+--     String resultValue=null;
+--     java.sql.ResultSet rs = con.createStatement().executeQuery(
+--     "UPDATE url SET total_calls = total_calls + 1 WHERE id = id_url_in");
+--        while(rs.next())
+--        {
+--         resultValue=rs.getString(1);
+--        }
+--     return resultValue;
+-- }
+-- $$;

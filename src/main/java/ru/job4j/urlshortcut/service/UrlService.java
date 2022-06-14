@@ -61,8 +61,8 @@ public class UrlService {
     public Optional<Url> redirect(String shortCode) {
         Optional<Url> url = urlRepository.findByShortUrl(shortCode);
         if (url.isPresent()) {
-            var typeOfIsolationLevel = urlRepository.incrementLinkCallsNative(
-                    url.get().getId(), "dummy"
+            urlRepository.incrementLinkCallsNative(
+                    url.get().getId()
             );
             return url;
         }

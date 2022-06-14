@@ -14,7 +14,6 @@ import java.util.StringJoiner;
 public class Url {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull(message = "Id must be non null", groups = {
             Operation.OnUpdate.class, Operation.OnDelete.class
     })

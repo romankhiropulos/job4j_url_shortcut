@@ -1,4 +1,5 @@
-CREATE OR REPLACE PROCEDURE increment_link_calls_procedure(IN id_url_in BIGINT, INOUT answer_inout TEXT) AS
+CREATE OR REPLACE PROCEDURE increment_link_calls_procedure(IN id_url_in BIGINT, INOUT answer_inout TEXT)
+    AS
 $$
 BEGIN
 
