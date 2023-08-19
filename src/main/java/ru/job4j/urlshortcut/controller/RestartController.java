@@ -7,8 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Контроллер для программируемого рестарта приложения.
+ * Использовать стандартный рестарт через actuator можно через POST-запрос ...actuator/restart
+ */
 @RestController
-@RequestMapping("/restart")
+@RequestMapping("/programmatically_restart")
 public class RestartController {
 
     private static final class RestartAnswer {
