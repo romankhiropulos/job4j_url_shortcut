@@ -23,6 +23,7 @@ public class Site {
     @NotBlank(message = "Name must not be empty", groups = {
             Operation.OnUpdate.class, Operation.OnDelete.class, Operation.OnCreate.class
     })
+    @NotNull
     private String name;
 
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "site", fetch = FetchType.LAZY)

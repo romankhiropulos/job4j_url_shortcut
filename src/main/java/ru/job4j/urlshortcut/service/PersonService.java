@@ -55,7 +55,7 @@ public class PersonService {
         site = siteService.save(site);
         person.setSite(site);
         roleService.findByRole("ROLE_USER").ifPresent(person::setRole);
-        person.setName(site.getName() + "_user_" + UUID.randomUUID());
+        person.setName("user_of_".concat(site.getName()));
         String newPasswordBase62 = Encryptor.toBase62((person.getId() + person.getSite().getId()));
         person.setPassword(encoder.encode(newPasswordBase62));
         personRepository.save(person);
