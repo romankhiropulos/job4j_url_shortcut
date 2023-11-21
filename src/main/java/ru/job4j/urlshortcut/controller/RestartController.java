@@ -13,11 +13,10 @@ import ru.job4j.urlshortcut.Job4jUrlShortcutApplication;
 
 /**
  * Контроллер для программируемого рестарта приложения c помощью двух методов:
- * 1) Через RestartEndpoint-actuator в новой нити
- *    (Можно использовать стандартный рестарт через actuator
- *    с помощью автоматически созданного POST-запроса ...actuator/restart)
- * 2) С помощью перезапуска контекства в новой нити
- *
+ * <p>1) Через RestartEndpoint-actuator</p>
+ * <p>2) С помощью перезапуска контекства в новой нити</p>
+ * <p>3) Можно использовать стандартный рестарт с помошью actuator,<br>
+ *     который создает автоматически <b>POST</b>-запрос по url your_app_url/actuator/restart</p>
  */
 @RestController
 @RequestMapping("/programmatically_restart")
@@ -34,15 +33,9 @@ public class RestartController {
 
     @GetMapping("/actuator")
     public ResponseEntity<RestartAnswer> restartWithActuator() {
-
-        Thread restartThread = new Thread(() -> {
-            System.setProperty("server.port", String.valueOf(8089));
-            System.setProperty("server.servlet.contextPath", "/zontik_url_shortcut");
-            restartEndpoint.restart();
-        });
-        restartThread.setDaemon(false);
-        restartThread.start();
-
+        System.setProperty("server.port", String.valueOf(8089));
+        System.setProperty("server.servlet.contextPath", "/zontik_url_shortcut");
+        restartEndpoint.restart();
         return new ResponseEntity<>(new RestartAnswer("Actuator", "Ok"), HttpStatus.OK);
     }
 
