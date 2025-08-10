@@ -2,10 +2,8 @@ DELETE FROM role;
 DELETE FROM url;
 DELETE FROM site;
 
-INSERT INTO role (role)
-    VALUES ('ROLE_USER');
-INSERT INTO role (role)
-    VALUES ('ROLE_ADMIN');
+INSERT INTO role (role) VALUES ('ROLE_USER');
+INSERT INTO role (role) VALUES ('ROLE_ADMIN');
 
 INSERT INTO site (id, name) VALUES (49999, 'job4j.ru');
 

@@ -1,5 +1,6 @@
 package ru.job4j.urlshortcut.service;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.job4j.urlshortcut.model.Person;
@@ -77,5 +78,12 @@ public class PersonService {
 
     public Optional<Person> findById(long id) {
         return personRepository.findById(id);
+    }
+
+    public void deleteByIdWithThrow(long id) {
+        personRepository.findById(id).orElseThrow(
+                () -> new EmptyResultDataAccessException(
+                        String.format("No %s entity with id %s exists!", "person", id), 1)
+        );
     }
 }
